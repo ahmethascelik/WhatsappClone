@@ -38,6 +38,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Martha Craig"
@@ -114,30 +115,44 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/camButton"
+            android:layout_toLeftOf="@+id/buttonContainer"
             android:layout_toRightOf="@+id/addButton"
             android:hint="Lütfen mesaj yazınız..."
             android:inputType="text" />
 
 
-        <ImageButton
-
-            android:id="@+id/camButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="8dp"
-            android:layout_toLeftOf="@+id/micButton"
-            android:background="@drawable/ic_camera" />
-
-        <ImageButton
-            android:id="@+id/micButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:id="@+id/buttonContainer"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="12dp"
-            android:background="@drawable/ic_record_audio" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageButton
+
+                android:id="@+id/camButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_toLeftOf="@+id/micButton"
+                android:background="@drawable/ic_camera" />
+
+            <ImageButton
+                android:id="@+id/micButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:background="@drawable/ic_record_audio" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:background="@drawable/ic_send_message" />
+
+        </LinearLayout>
 
 
     </RelativeLayout>
