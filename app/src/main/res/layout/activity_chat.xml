@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
 
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/chat_bar_color">
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layoutBody"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layoutBottom"
+        android:layout_below="@+id/layoutHeader"
+        android:background="@drawable/chat_bg">
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/chat_bar_color">
 
-        android:layout_toRightOf="@id/button"
-        android:text="Whatsapp çok güzel" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_alignParentBottom="true"
-
-        android:text="Button" />
-
-    <Switch
-        android:padding="12dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Switch" />
 </RelativeLayout>
