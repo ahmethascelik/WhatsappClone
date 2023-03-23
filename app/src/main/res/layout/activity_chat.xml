@@ -83,27 +83,11 @@
         android:id="@+id/layoutBody"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/layoutBottom"
         android:layout_below="@+id/layoutHeader"
         android:background="@drawable/chat_bg">
 
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/layoutBottom"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/chat_bar_color">
-
-        <EditText
-            android:hint="Lütfen mesaj yazınız..."
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
-
-    </RelativeLayout>
 
 </RelativeLayout>
