@@ -85,7 +85,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/layoutBottom"
         android:layout_below="@+id/layoutHeader"
-        android:background="@drawable/chat_bg">
+        android:background="@drawable/background">
 
     </RelativeLayout>
 
