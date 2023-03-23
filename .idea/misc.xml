@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_back_button.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/ic_call.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.206" />
-        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.30155029296875" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.1" />
         <entry key="app/src/main/res/layout/test.xml" value="0.318974358974359" />
       </map>
     </option>
