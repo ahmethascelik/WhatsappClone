@@ -10,6 +10,72 @@
         android:layout_height="44dp"
         android:background="@color/chat_bar_color">
 
+        <ImageButton
+            android:id="@+id/backbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/ic_back_button" />
+
+
+        <ImageView
+            android:layout_marginLeft="42dp"
+            android:id="@+id/image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/backbutton"
+            android:src="@color/black" />
+
+        <LinearLayout
+            android:layout_marginHorizontal="8dp"
+            android:layout_toRightOf="@+id/image"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/videoCallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Martha Craig"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:textColor="#8e8e93"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="tap here for contact info"/>
+        </LinearLayout>
+
+
+
+        <ImageButton
+            android:layout_toLeftOf="@+id/call_button"
+            android:id="@+id/videoCallButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/ic_video_call" />
+
+
+        <ImageButton
+
+            android:layout_alignParentRight="true"
+            android:id="@+id/call_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="18dp"
+            android:background="@drawable/ic_call" />
+
+
+
     </RelativeLayout>
 
 
@@ -30,6 +96,13 @@
         android:layout_height="46dp"
         android:layout_alignParentBottom="true"
         android:background="@color/chat_bar_color">
+
+        <EditText
+            android:hint="Lütfen mesaj yazınız..."
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
 
     </RelativeLayout>
 
