@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.teb.whatsappclone.R;
 import com.teb.whatsappclone.data.model.ChatMessage;
@@ -32,6 +34,9 @@ public class ChatActivity extends Activity {
     ImageButton micButton;
     ImageButton camButton;
     ImageButton sendButton;
+
+    RecyclerView recyclerView;
+    private final ChatAdapter adapter = new ChatAdapter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,8 +95,15 @@ public class ChatActivity extends Activity {
 
 
         //liste
-        chatService.setMessageListener(messageList -> {
+        recyclerView = findViewById(R.id.recyclerView);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+
+
+        chatService.setMessageListener(messageList -> {
+            adapter.setDataList(messageList);
         });
 
     }
