@@ -47,6 +47,15 @@ public class ChatActivity extends Activity {
             finish();
         });
 
+        sendButton.setOnClickListener(view -> {
+            String message = editText.getText().toString();
+            editText.setText("");
+
+            toggleButtonsVisibility(true);
+
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
         txtUsername.setText("Ahmet");
         editText = findViewById(R.id.editText);
 
@@ -59,18 +68,7 @@ public class ChatActivity extends Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(charSequence.length() == 0){
-                    //camera + mic visible | sendbutton gone
-                    camButton.setVisibility(View.VISIBLE);
-                    micButton.setVisibility(View.VISIBLE);
-                    sendButton.setVisibility(View.GONE);
-                }else{
-                    //camera + mic gone | sendbutton visible
-
-                    camButton.setVisibility(View.GONE);
-                    micButton.setVisibility(View.GONE);
-                    sendButton.setVisibility(View.VISIBLE);
-                }
+                toggleButtonsVisibility(charSequence.length() == 0);
 
             }
 
@@ -81,4 +79,21 @@ public class ChatActivity extends Activity {
         });
 
     }
+
+    public void toggleButtonsVisibility(boolean sendButtonGone){
+
+        if(sendButtonGone){
+            //camera + mic visible | sendbutton gone
+            camButton.setVisibility(View.VISIBLE);
+            micButton.setVisibility(View.VISIBLE);
+            sendButton.setVisibility(View.GONE);
+        }else{
+            //camera + mic gone | sendbutton visible
+
+            camButton.setVisibility(View.GONE);
+            micButton.setVisibility(View.GONE);
+            sendButton.setVisibility(View.VISIBLE);
+        }
+    }
+
 }
