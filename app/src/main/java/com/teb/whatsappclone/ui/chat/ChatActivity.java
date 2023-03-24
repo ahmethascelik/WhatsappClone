@@ -14,8 +14,16 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.teb.whatsappclone.R;
+import com.teb.whatsappclone.data.model.ChatMessage;
+import com.teb.whatsappclone.data.service.ChatService;
+import com.teb.whatsappclone.data.service.MessageListener;
+import com.teb.whatsappclone.data.service.ServiceLocator;
+
+import java.util.List;
 
 public class ChatActivity extends Activity {
+
+    ChatService chatService = ServiceLocator.provideChatService();
 
     ImageButton backButton;
     TextView txtUsername;
@@ -53,6 +61,8 @@ public class ChatActivity extends Activity {
 
             toggleButtonsVisibility(true);
 
+            chatService.sendMessage("ahmet", message);
+
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
@@ -76,6 +86,12 @@ public class ChatActivity extends Activity {
             public void afterTextChanged(Editable editable) {
 
             }
+        });
+
+
+        //liste
+        chatService.setMessageListener(messageList -> {
+
         });
 
     }
