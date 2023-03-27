@@ -58,6 +58,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
             holder.layoutIncoming.setVisibility(View.VISIBLE);
             holder.layoutOutgoing.setVisibility(View.GONE);
 
+            holder.txtMessageIncomingSender.setText(chatMessage.sender);
             holder.txtMessageIncoming.setText(chatMessage.message);
 
         }
@@ -73,6 +74,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
     static class ChatMessageViewHolder extends RecyclerView.ViewHolder {
         TextView txtMessage;
         TextView txtMessageIncoming;
+        TextView txtMessageIncomingSender;
 
         View layoutIncoming;
         View layoutOutgoing;
@@ -84,6 +86,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
             layoutOutgoing = v.findViewById(R.id.layoutOutgoing);
             layoutIncoming = v.findViewById(R.id.layoutIncoming);
             txtMessageIncoming = v.findViewById(R.id.txtMessageIncoming);
+            txtMessageIncomingSender = v.findViewById(R.id.txtMessageIncomingSender);
         }
     }
 }
