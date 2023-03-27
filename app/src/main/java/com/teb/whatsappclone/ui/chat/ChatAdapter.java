@@ -17,6 +17,11 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageViewHolder> {
 
     List<ChatMessage> dataList = new ArrayList<>();
+    private String nickname;
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public void setDataList(List<ChatMessage> dataList) {
         this.dataList.clear();
@@ -39,7 +44,23 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
 
         ChatMessage chatMessage = dataList.get(position);
 
-        holder.txtMessage.setText(chatMessage.message);
+        boolean isOutgoing = chatMessage.sender.equals(nickname);
+
+        if(isOutgoing){
+            holder.layoutIncoming.setVisibility(View.GONE);
+            holder.layoutOutgoing.setVisibility(View.VISIBLE);
+
+            holder.txtMessage.setText(chatMessage.message);
+
+        }else{
+            //incoming
+
+            holder.layoutIncoming.setVisibility(View.VISIBLE);
+            holder.layoutOutgoing.setVisibility(View.GONE);
+
+            holder.txtMessageIncoming.setText(chatMessage.message);
+
+        }
 
     }
 
@@ -48,12 +69,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         return dataList.size();
     }
 
+
     static class ChatMessageViewHolder extends RecyclerView.ViewHolder {
         TextView txtMessage;
+        TextView txtMessageIncoming;
+
+        View layoutIncoming;
+        View layoutOutgoing;
+
 
         public ChatMessageViewHolder(View v) {
             super(v);
             txtMessage = v.findViewById(R.id.txtMessage);
+            layoutOutgoing = v.findViewById(R.id.layoutOutgoing);
+            layoutIncoming = v.findViewById(R.id.layoutIncoming);
+            txtMessageIncoming = v.findViewById(R.id.txtMessageIncoming);
         }
     }
 }

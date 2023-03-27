@@ -22,6 +22,15 @@ public class FakeChatService implements ChatService {
 
         fakeMessageList.add(chatMessage);
 
+
+        ChatMessage gelenMesaj = new ChatMessage();
+        gelenMesaj.message = "Gelen mesaj ! " + message;
+        gelenMesaj.sender = "yigit";
+//        chatMessage.dateTime = new D
+
+        fakeMessageList.add(gelenMesaj);
+
+
         if(messageListener != null){
             messageListener.onMessageListChanged(fakeMessageList);
         }

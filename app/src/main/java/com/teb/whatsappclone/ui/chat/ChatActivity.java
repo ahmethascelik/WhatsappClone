@@ -25,6 +25,8 @@ import java.util.List;
 
 public class ChatActivity extends Activity {
 
+    public String nickname;
+
     ChatService chatService = ServiceLocator.provideChatService();
 
     ImageButton backButton;
@@ -41,6 +43,8 @@ public class ChatActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        nickname = "ahmet";
 
         setContentView(R.layout.activity_chat);
 
@@ -66,12 +70,12 @@ public class ChatActivity extends Activity {
 
             toggleButtonsVisibility(true);
 
-            chatService.sendMessage("ahmet", message);
+            chatService.sendMessage(nickname, message);
 
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
-        txtUsername.setText("Ahmet");
+        txtUsername.setText(nickname);
         editText = findViewById(R.id.editText);
 
         editText.addTextChangedListener(new TextWatcher() {
@@ -95,6 +99,9 @@ public class ChatActivity extends Activity {
 
 
         //liste
+
+        adapter.setNickname(nickname);
+
         recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
