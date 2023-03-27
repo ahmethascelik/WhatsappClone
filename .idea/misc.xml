@@ -11,7 +11,7 @@
         <entry key="app/src/main/res/drawable/ic_record_audio.xml" value="0.289" />
         <entry key="app/src/main/res/drawable/ic_video_call.xml" value="0.289" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.19540229885057472" />
-        <entry key="app/src/main/res/layout/list_item_chat_message.xml" value="0.32824292864118304" />
+        <entry key="app/src/main/res/layout/list_item_chat_message.xml" value="0.5" />
         <entry key="app/src/main/res/layout/test.xml" value="0.318974358974359" />
       </map>
     </option>
