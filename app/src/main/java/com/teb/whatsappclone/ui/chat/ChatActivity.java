@@ -44,7 +44,7 @@ public class ChatActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        nickname = "ahmet";
+        nickname = "yigit";
 
         setContentView(R.layout.activity_chat);
 
@@ -72,7 +72,6 @@ public class ChatActivity extends Activity {
 
             chatService.sendMessage(nickname, message);
 
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
         txtUsername.setText(nickname);
