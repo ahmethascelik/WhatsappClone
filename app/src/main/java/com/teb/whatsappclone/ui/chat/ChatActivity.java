@@ -25,6 +25,8 @@ import java.util.List;
 
 public class ChatActivity extends Activity {
 
+    public static final String EXTRA_NICKNAME = "EXTRA_NICKNAME";
+
     public String nickname;
 
     ChatService chatService = ServiceLocator.provideChatService();
@@ -44,11 +46,17 @@ public class ChatActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        nickname = "yigit";
+        String pNickname = getIntent().getStringExtra(EXTRA_NICKNAME);
+        if(pNickname != null){
+            this.nickname = pNickname;
+        }
+
 
         setContentView(R.layout.activity_chat);
 
         initViews();
+
+
 
     }
 
