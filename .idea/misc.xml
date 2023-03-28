@@ -14,6 +14,8 @@
         <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.5" />
         <entry key="app/src/main/res/layout/list_item_chat_incoming_message.xml" value="0.1962962962962963" />
         <entry key="app/src/main/res/layout/list_item_chat_message.xml" value="0.4180327868852459" />
+        <entry key="app/src/main/res/layout/list_item_chat_message_incoming_text.xml" value="0.3385416666666667" />
+        <entry key="app/src/main/res/layout/list_item_chat_message_outgoing_text.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/layout/test.xml" value="0.318974358974359" />
       </map>
     </option>
