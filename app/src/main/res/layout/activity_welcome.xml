@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to Whatsapp!"
+            android:text="@string/welcome_to_whatsapp"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
             android:textSize="22sp" />
@@ -33,7 +33,7 @@
             android:id="@+id/txtInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please choose your nickname!"
+            android:text="@string/please_choose_your_nickname"
             android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:layout_margin="16dp"
@@ -50,7 +50,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OK"/>
+            android:text="@string/ok"/>
 
     </LinearLayout>
 

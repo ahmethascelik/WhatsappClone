@@ -82,7 +82,7 @@ public class ChatActivity extends Activity {
 
         });
 
-        txtUsername.setText(nickname);
+        txtUsername.setText(getString(R.string.welcome_x, nickname));
         editText = findViewById(R.id.editText);
 
         editText.addTextChangedListener(new TextWatcher() {
