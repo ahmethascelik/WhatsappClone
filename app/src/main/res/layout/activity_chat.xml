@@ -114,25 +114,26 @@
 
 
         <EditText
-            android:paddingHorizontal="12dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/edittext_bg"
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/buttonContainer"
             android:layout_toRightOf="@+id/addButton"
+            android:background="@drawable/edittext_bg"
             android:hint="Lütfen mesaj yazınız..."
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingHorizontal="12dp" />
 
 
         <LinearLayout
-            android:gravity="center_vertical"
             android:id="@+id/buttonContainer"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <ImageButton
 
                 android:id="@+id/camButton"
@@ -150,16 +151,22 @@
                 android:background="@drawable/ic_record_audio" />
 
             <ImageButton
-                android:visibility="gone"
                 android:id="@+id/sendButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:background="@drawable/ic_send_message" />
+                android:background="@drawable/ic_send_message"
+                android:visibility="gone" />
 
         </LinearLayout>
 
 
     </RelativeLayout>
+
+
+    <com.teb.whatsappclone.ui.widgets.AttachmentView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </RelativeLayout>
