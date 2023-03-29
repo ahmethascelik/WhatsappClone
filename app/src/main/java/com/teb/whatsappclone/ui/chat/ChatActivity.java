@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.teb.whatsappclone.R;
 import com.teb.whatsappclone.data.model.ChatMessage;
 import com.teb.whatsappclone.data.service.ChatService;
@@ -192,7 +194,13 @@ public class ChatActivity extends Activity {
         cameraUtil.onActivityResult(requestCode, resultCode, data, new CameraUtil.OnPhotoShotListener() {
             @Override
             public void onPhotoShotSuccess(String filePath) {
-                setPic(filePath);
+
+                File file = new File(filePath);
+
+                ImageView imageView = findViewById(R.id.image);
+                Picasso.get()
+                        .load(file)
+                        .into(imageView);
             }
         });
 
