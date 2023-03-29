@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.teb.whatsappclone.R;
 import com.teb.whatsappclone.data.model.ChatMessage;
+import com.teb.whatsappclone.data.model.ChatMessageType;
+import com.teb.whatsappclone.ui.chat.type.ChatMessageIncomingImageViewHolder;
 import com.teb.whatsappclone.ui.chat.type.ChatMessageIncomingTextViewHolder;
+import com.teb.whatsappclone.ui.chat.type.ChatMessageOutgoingImageViewHolder;
 import com.teb.whatsappclone.ui.chat.type.ChatMessageOutgoingTextViewHolder;
 
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatMessageViewHolder> {
 
     public static final int VIEW_TYPE_INCOMING_TEXT = 1;
     public static final int VIEW_TYPE_OUTGOING_TEXT = 2;
+
+    public static final int VIEW_TYPE_INCOMING_IMAGE = 3;
+    public static final int VIEW_TYPE_OUTGOING_IMAGE = 4;
 
     List<ChatMessage> dataList = new ArrayList<>();
     private String nickname;
@@ -42,9 +48,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatMessageViewHolder> {
         boolean isOutgoing = chatMessage.sender.equals(nickname);
 
         if(isOutgoing){
-            return VIEW_TYPE_OUTGOING_TEXT;
+            return chatMessage.messageType == ChatMessageType.TYPE_IMAGE ?  VIEW_TYPE_OUTGOING_IMAGE  : VIEW_TYPE_OUTGOING_TEXT;
         }else{
-            return VIEW_TYPE_INCOMING_TEXT;
+            return chatMessage.messageType == ChatMessageType.TYPE_IMAGE ?  VIEW_TYPE_INCOMING_IMAGE  : VIEW_TYPE_INCOMING_TEXT;
         }
 
 
@@ -58,6 +64,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatMessageViewHolder> {
            return ChatMessageOutgoingTextViewHolder.newInstace(parent);
         }else if (viewType == VIEW_TYPE_INCOMING_TEXT) {
             return ChatMessageIncomingTextViewHolder.newInstace(parent);
+        } else if (viewType == VIEW_TYPE_OUTGOING_IMAGE) {
+           return ChatMessageOutgoingImageViewHolder.newInstace(parent);
+        }else if (viewType == VIEW_TYPE_INCOMING_IMAGE) {
+            return ChatMessageIncomingImageViewHolder.newInstace(parent);
         }
 
         throw new RuntimeException("development error");

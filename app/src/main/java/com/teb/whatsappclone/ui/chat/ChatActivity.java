@@ -2,47 +2,29 @@ package com.teb.whatsappclone.ui.chat;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Camera;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.teb.whatsappclone.R;
-import com.teb.whatsappclone.data.model.ChatMessage;
 import com.teb.whatsappclone.data.service.ChatService;
-import com.teb.whatsappclone.data.service.MessageListener;
 import com.teb.whatsappclone.data.service.ServiceLocator;
 import com.teb.whatsappclone.ui.util.CameraUtil;
-import com.teb.whatsappclone.ui.welcome.WelcomeActivity;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
-import com.teb.whatsappclone.ui.widgets.AttachmentItemsAdapter;
 import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends Activity {
@@ -106,7 +88,7 @@ public class ChatActivity extends Activity {
 
             toggleButtonsVisibility(true);
 
-            chatService.sendMessage(nickname, message);
+            chatService.sendTextMessage(nickname, message);
 
         });
 
@@ -195,47 +177,21 @@ public class ChatActivity extends Activity {
             @Override
             public void onPhotoShotSuccess(String filePath) {
 
-                File file = new File(filePath);
 
-                ImageView imageView = findViewById(R.id.image);
-                Picasso.get()
-                        .load(file)
-                        .into(imageView);
+                chatService.sendImageMessage(nickname, filePath);
+
+//                File file = new File(filePath);
+//
+//                ImageView imageView = findViewById(R.id.image);
+//                Picasso.get()
+//                        .load(file)
+//                        .into(imageView);
             }
         });
 
 
     }
 
-
-
-    private void setPic(String currentPhotoPath) {
-        // Get the dimensions of the View
-        int targetW = 200;
-        int targetH = 200;
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-        RelativeLayout layoutBody = findViewById(R.id.layoutBody);
-
-        layoutBody.setBackground(new BitmapDrawable(bitmap));
-    }
 
 
 

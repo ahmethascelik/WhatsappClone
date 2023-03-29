@@ -23,9 +23,14 @@ public class FirebaseChatService implements ChatService {
 
 
     @Override
-    public void sendMessage(String sender, String message) {
+    public void sendTextMessage(String sender, String message) {
 
         writeNewMessage(sender, message);
+    }
+
+    @Override
+    public void sendImageMessage(String sender, String filePath) {
+
     }
 
     public FirebaseChatService() {

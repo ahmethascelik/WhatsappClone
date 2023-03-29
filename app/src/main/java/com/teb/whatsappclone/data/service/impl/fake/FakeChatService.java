@@ -1,6 +1,7 @@
 package com.teb.whatsappclone.data.service.impl.fake;
 
 import com.teb.whatsappclone.data.model.ChatMessage;
+import com.teb.whatsappclone.data.model.ChatMessageType;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.MessageListener;
 
@@ -14,9 +15,10 @@ public class FakeChatService implements ChatService {
 
 
     @Override
-    public void sendMessage(String sender, String message) {
+    public void sendTextMessage(String sender, String textMessage) {
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.message = message;
+        chatMessage.message = textMessage;
+        chatMessage.messageType = ChatMessageType.TYPE_TEXT;
         chatMessage.sender = sender;
 //        chatMessage.dateTime = new D
 
@@ -24,7 +26,7 @@ public class FakeChatService implements ChatService {
 
 
         ChatMessage gelenMesaj = new ChatMessage();
-        gelenMesaj.message = "Gelen mesaj ! " + message;
+        gelenMesaj.message = "Gelen mesaj ! " + textMessage;
         gelenMesaj.sender = "yigit";
 //        chatMessage.dateTime = new D
 
@@ -32,6 +34,30 @@ public class FakeChatService implements ChatService {
 
 
         if(messageListener != null){
+            messageListener.onMessageListChanged(fakeMessageList);
+        }
+    }
+
+    @Override
+    public void sendImageMessage(String sender, String filePath) {
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.imageUrl = filePath;
+        chatMessage.messageType = ChatMessageType.TYPE_IMAGE;
+        chatMessage.sender = sender;
+//        chatMessage.dateTime = new D
+
+        fakeMessageList.add(chatMessage);
+
+
+        ChatMessage gelenMesaj = new ChatMessage();
+        gelenMesaj.imageUrl = filePath;
+        gelenMesaj.messageType = ChatMessageType.TYPE_IMAGE;
+        gelenMesaj.sender = "yigit";
+//        chatMessage.dateTime = new D
+
+        fakeMessageList.add(gelenMesaj);
+
+        if(messageListener != null) {
             messageListener.onMessageListChanged(fakeMessageList);
         }
     }

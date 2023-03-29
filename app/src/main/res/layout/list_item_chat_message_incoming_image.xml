@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/layoutIncoming"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="78dp"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/incoming_bubble">
+        <TextView
+            android:minWidth="84dp"
+            android:id="@+id/txtMessageIncomingSender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:textColor="#3C3C43"
+            android:textStyle="bold"
+            tools:text="nickname" />
+
+        <ImageView
+            android:layout_below="@+id/txtMessageIncomingSender"
+            android:minWidth="84dp"
+            android:id="@+id/imageViewIncoming"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/black"
+            tools:text="test" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewIncoming"
+            android:layout_alignRight="@+id/imageViewIncoming"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtDateIncoming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11:33" />
+
+            <ImageView
+                android:id="@+id/imgSendingStatusIncoming"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_message_sent" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
