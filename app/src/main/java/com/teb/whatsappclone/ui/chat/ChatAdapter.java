@@ -55,14 +55,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatMessageViewHolder> {
     public ChatMessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         if (viewType == VIEW_TYPE_OUTGOING_TEXT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_chat_message_outgoing_text, parent, false);
-
-            return new ChatMessageOutgoingTextViewHolder(view);
-        }else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_chat_message_incoming_text, parent, false);
-
-            return new ChatMessageIncomingTextViewHolder(view);
+           return ChatMessageOutgoingTextViewHolder.newInstace(parent);
+        }else if (viewType == VIEW_TYPE_INCOMING_TEXT) {
+            return ChatMessageIncomingTextViewHolder.newInstace(parent);
         }
+
+        throw new RuntimeException("development error");
     }
 
     @Override

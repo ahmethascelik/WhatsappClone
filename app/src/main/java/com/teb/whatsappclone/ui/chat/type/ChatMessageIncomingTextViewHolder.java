@@ -1,8 +1,11 @@
 package com.teb.whatsappclone.ui.chat.type;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.teb.whatsappclone.R;
@@ -26,5 +29,11 @@ public class ChatMessageIncomingTextViewHolder extends ChatMessageViewHolder {
 
         txtMessageIncomingSender.setText(chatMessage.sender);
         txtMessageIncoming.setText(chatMessage.message);
+    }
+
+    public static ChatMessageIncomingTextViewHolder newInstace(@NonNull ViewGroup parent){
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_chat_message_incoming_text, parent, false);
+
+        return new ChatMessageIncomingTextViewHolder(view);
     }
 }

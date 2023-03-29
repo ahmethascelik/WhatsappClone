@@ -137,8 +137,6 @@ public class ChatActivity extends Activity {
 
         List<AttachmentItem> list = new ArrayList<>();
         list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
-        list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
-        list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
         attachmentView.setItems(list);
 
         attachmentView.setItemClickListener(position -> {
