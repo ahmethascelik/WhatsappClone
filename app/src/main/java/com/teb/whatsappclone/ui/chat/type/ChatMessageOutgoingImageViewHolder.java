@@ -28,7 +28,7 @@ public class ChatMessageOutgoingImageViewHolder extends ChatMessageViewHolder {
     public void bindMessageToView(ChatMessage chatMessage) {
 
         Picasso.get()
-                .load(new File(chatMessage.imageUrl))
+                .load(chatMessage.imageUrl)
                 .into(imageView);
 
     }
