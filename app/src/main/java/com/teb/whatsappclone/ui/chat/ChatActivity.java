@@ -20,7 +20,10 @@ import com.teb.whatsappclone.data.model.ChatMessage;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.MessageListener;
 import com.teb.whatsappclone.data.service.ServiceLocator;
+import com.teb.whatsappclone.ui.widgets.AttachmentItem;
+import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends Activity {
@@ -39,7 +42,11 @@ public class ChatActivity extends Activity {
     ImageButton camButton;
     ImageButton sendButton;
 
+    ImageButton addButton;
+
     RecyclerView recyclerView;
+    AttachmentView attachmentView;
+
     private final ChatAdapter adapter = new ChatAdapter();
 
     @Override
@@ -119,6 +126,18 @@ public class ChatActivity extends Activity {
         chatService.setMessageListener(messageList -> {
             adapter.setDataList(messageList);
         });
+
+        //attachment view
+
+        addButton = findViewById(R.id.addButton);
+        attachmentView = findViewById(R.id.attachmentPanel);
+
+        addButton.setOnClickListener(view -> attachmentView.show());
+
+        List<AttachmentItem> list = new ArrayList<>();
+        list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
+        list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
+        attachmentView.setItems(list);
 
     }
 

@@ -4,4 +4,5 @@
     <string name="please_choose_your_nickname">Please choose your nickname!</string>
     <string name="ok">OK</string>
     <string name="welcome_x">Welcome %s</string>
+    <string name="camera_title">Camera</string>
 </resources>
