@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.teb.whatsappclone.data.model.ChatMessage;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.MessageListener;
 import com.teb.whatsappclone.data.service.ServiceLocator;
+import com.teb.whatsappclone.ui.util.CameraUtil;
 import com.teb.whatsappclone.ui.welcome.WelcomeActivity;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
 import com.teb.whatsappclone.ui.widgets.AttachmentItemsAdapter;
@@ -43,8 +45,9 @@ import java.util.List;
 
 public class ChatActivity extends Activity {
 
+    CameraUtil cameraUtil = new CameraUtil();
+
     public static final String EXTRA_NICKNAME = "EXTRA_NICKNAME";
-    private static final int REQUEST_IMAGE_CAPTURE = 666;
 
     public String nickname;
 
@@ -157,8 +160,9 @@ public class ChatActivity extends Activity {
         attachmentView.setItemClickListener(position -> {
             //0 ise camera
             if(position == 0){
-                dispatchTakePictureIntent();
-                Toast.makeText(ChatActivity.this, "Camera", Toast.LENGTH_SHORT).show();
+
+                cameraUtil.takePhoto(ChatActivity.this);
+
             }
         });
 
@@ -179,73 +183,25 @@ public class ChatActivity extends Activity {
             sendButton.setVisibility(View.VISIBLE);
         }
 
-
-        Intent i = new Intent(this, WelcomeActivity.class);
-
-        startActivityForResult(i, REQUEST_IMAGE_CAPTURE);
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-           //
-            setPic();
-            //imageView.setImageBitmap(imageBitmap);
-        }
-    }
 
-    String currentPhotoPath;
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
+        cameraUtil.onActivityResult(requestCode, resultCode, data, new CameraUtil.OnPhotoShotListener() {
+            @Override
+            public void onPhotoShotSuccess(String filePath) {
+                setPic(filePath);
             }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.teb.whatsappclone",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
+        });
+
+
     }
 
 
-//    private void galleryAddPic() {
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        File f = new File(currentPhotoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        this.sendBroadcast(mediaScanIntent);
-//    }
 
-    private void setPic() {
+    private void setPic(String currentPhotoPath) {
         // Get the dimensions of the View
         int targetW = 200;
         int targetH = 200;
