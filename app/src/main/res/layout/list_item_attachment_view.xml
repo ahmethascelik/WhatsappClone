@@ -22,4 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:ignore="SpUsage" />
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:id="@+id/seperator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#C6C6C8"/>
 </RelativeLayout>

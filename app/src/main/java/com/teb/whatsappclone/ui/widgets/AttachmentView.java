@@ -82,4 +82,11 @@ public class AttachmentView extends RelativeLayout {
         adapter.setAttachmentItemList(attachmentItemList);
     }
 
+    public void setItemClickListener(AttachmentItemsAdapter.OnItemClickListener itemClickListener){
+        adapter.setListener(position -> {
+            itemClickListener.onItemClicked(position);
+            hide();
+        });
+    }
+
 }

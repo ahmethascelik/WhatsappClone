@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttachmentItemsAdapter extends RecyclerView.Adapter<AttachmentItemsAdapter.AttachmentViewHolder> {
+    OnItemClickListener listener;
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     List<AttachmentItem> attachmentItemList = new ArrayList<>();
 
@@ -48,7 +54,7 @@ public class AttachmentItemsAdapter extends RecyclerView.Adapter<AttachmentItems
         return attachmentItemList.size();
     }
 
-    public static class  AttachmentViewHolder extends RecyclerView.ViewHolder{
+    public class  AttachmentViewHolder extends RecyclerView.ViewHolder{
 
         ImageView iconView;
         TextView textView;
@@ -57,6 +63,20 @@ public class AttachmentItemsAdapter extends RecyclerView.Adapter<AttachmentItems
             super(itemView);
             iconView = itemView.findViewById(R.id.imgIcon);
             textView = itemView.findViewById(R.id.textView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (listener != null) {
+                        listener.onItemClicked(getAdapterPosition());
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener{
+        public void onItemClicked(int position);
     }
 }

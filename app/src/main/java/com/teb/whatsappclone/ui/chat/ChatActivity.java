@@ -21,6 +21,7 @@ import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.MessageListener;
 import com.teb.whatsappclone.data.service.ServiceLocator;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
+import com.teb.whatsappclone.ui.widgets.AttachmentItemsAdapter;
 import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
 import java.util.ArrayList;
@@ -137,7 +138,15 @@ public class ChatActivity extends Activity {
         List<AttachmentItem> list = new ArrayList<>();
         list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
         list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
+        list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
         attachmentView.setItems(list);
+
+        attachmentView.setItemClickListener(position -> {
+            //0 ise camera
+            if(position == 0){
+                Toast.makeText(ChatActivity.this, "Camera", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
