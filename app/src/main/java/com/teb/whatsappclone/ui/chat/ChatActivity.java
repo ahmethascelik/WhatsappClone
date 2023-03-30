@@ -1,23 +1,26 @@
 package com.teb.whatsappclone.ui.chat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
 import com.teb.whatsappclone.R;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.ServiceLocator;
@@ -26,7 +29,6 @@ import com.teb.whatsappclone.ui.util.GalleryUtil;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
 import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class ChatActivity extends Activity {
     GalleryUtil galleryUtil = new GalleryUtil();
 
     public static final String EXTRA_NICKNAME = "EXTRA_NICKNAME";
+    private int STORAGE_PERMISSION_CODE = 1;
 
     public String nickname;
 
@@ -152,23 +155,45 @@ public class ChatActivity extends Activity {
             if(position == 0){
                 cameraUtil.takePhoto(ChatActivity.this);
             } else if (position == 1) {
-                //todo: galeri aç fonksiyonunu çağır.
-                galleryUtil.imageChooser(ChatActivity.this);
-                Toast.makeText(this, "galeri", Toast.LENGTH_SHORT).show();
+                if (ContextCompat.checkSelfPermission(ChatActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    galleryUtil.imageChooser(ChatActivity.this);
+                } else {
+                    requestStoragePermission();
+                }
             }
         });
 
     }
+    private void requestStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-//    public static final int SELECT_PICTURE = 200;
-//    public void imageChooser() {
-//
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-//
-//    }
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("This permission is needed because of this and that")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(ChatActivity.this,
+                                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+                            galleryUtil.imageChooser(ChatActivity.this);
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        }
+    }
+
     public void toggleButtonsVisibility(boolean sendButtonGone){
 
         if(sendButtonGone){
@@ -208,25 +233,11 @@ public class ChatActivity extends Activity {
         galleryUtil.onActivityResult(ChatActivity.this, requestCode, resultCode, data, new GalleryUtil.OnPhotoGalleryListener() {
             @Override
             public void onPhotoGallerySuccess(String filePath) {
-
                 chatService.sendImageMessage(nickname, filePath);
-
-//                File file = new File(filePath);
-//
-//                ImageView imageView = findViewById(R.id.image);
-//                Picasso.get()
-//                        .load(file)
-//                        .into(imageView);
             }
         });
 
 
     }
-
-
-
-
-
-
 
 }
