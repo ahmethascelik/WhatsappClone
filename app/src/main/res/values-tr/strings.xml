@@ -5,5 +5,5 @@
     <string name="ok">Tamam</string>
     <string name="welcome_x">Hoşgeldiniz %s</string>
     <string name="camera_title">Fotoğraf Çek</string>
-
+    <string name="gallery_title">Galeriyi Aç</string>
 </resources>

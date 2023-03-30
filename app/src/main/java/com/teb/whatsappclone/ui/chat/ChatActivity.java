@@ -2,6 +2,7 @@ package com.teb.whatsappclone.ui.chat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import com.teb.whatsappclone.R;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.ServiceLocator;
 import com.teb.whatsappclone.ui.util.CameraUtil;
+import com.teb.whatsappclone.ui.util.GalleryUtil;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
 import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
@@ -30,6 +33,7 @@ import java.util.List;
 public class ChatActivity extends Activity {
 
     CameraUtil cameraUtil = new CameraUtil();
+    GalleryUtil galleryUtil = new GalleryUtil();
 
     public static final String EXTRA_NICKNAME = "EXTRA_NICKNAME";
 
@@ -140,18 +144,31 @@ public class ChatActivity extends Activity {
         List<AttachmentItem> list = new ArrayList<>();
         list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
         attachmentView.setItems(list);
+        list.add(new AttachmentItem(R.drawable.ic_gallery, getString(R.string.gallery_title)));
+        attachmentView.setItems(list);
 
         attachmentView.setItemClickListener(position -> {
             //0 ise camera
             if(position == 0){
-
                 cameraUtil.takePhoto(ChatActivity.this);
-
+            } else if (position == 1) {
+                //todo: galeri aç fonksiyonunu çağır.
+                galleryUtil.imageChooser(ChatActivity.this);
+                Toast.makeText(this, "galeri", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
+//    public static final int SELECT_PICTURE = 200;
+//    public void imageChooser() {
+//
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+//
+//    }
     public void toggleButtonsVisibility(boolean sendButtonGone){
 
         if(sendButtonGone){
@@ -186,6 +203,20 @@ public class ChatActivity extends Activity {
 //                Picasso.get()
 //                        .load(file)
 //                        .into(imageView);
+            }
+        });
+        galleryUtil.onActivityResult(ChatActivity.this, requestCode, resultCode, data, new GalleryUtil.OnPhotoGalleryListener() {
+            @Override
+            public void onPhotoGallerySuccess(String filePath) {
+
+                chatService.sendImageMessage(nickname, filePath);
+
+                File file = new File(filePath);
+
+                ImageView imageView = findViewById(R.id.image);
+                Picasso.get()
+                        .load(file)
+                        .into(imageView);
             }
         });
 
