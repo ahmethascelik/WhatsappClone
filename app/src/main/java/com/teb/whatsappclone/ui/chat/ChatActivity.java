@@ -211,12 +211,12 @@ public class ChatActivity extends Activity {
 
                 chatService.sendImageMessage(nickname, filePath);
 
-                File file = new File(filePath);
-
-                ImageView imageView = findViewById(R.id.image);
-                Picasso.get()
-                        .load(file)
-                        .into(imageView);
+//                File file = new File(filePath);
+//
+//                ImageView imageView = findViewById(R.id.image);
+//                Picasso.get()
+//                        .load(file)
+//                        .into(imageView);
             }
         });
 
