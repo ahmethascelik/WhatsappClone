@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.teb.whatsappclone.R;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.ServiceLocator;
 import com.teb.whatsappclone.ui.util.CameraUtil;
+import com.teb.whatsappclone.ui.util.PollUtil;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
 import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
@@ -139,13 +141,25 @@ public class ChatActivity extends Activity {
 
         List<AttachmentItem> list = new ArrayList<>();
         list.add(new AttachmentItem(R.drawable.ic_camera, getString(R.string.camera_title)));
+        list.add(new AttachmentItem(R.drawable.ic_record_audio, "Anket"));
         attachmentView.setItems(list);
+
 
         attachmentView.setItemClickListener(position -> {
             //0 ise camera
             if(position == 0){
 
                 cameraUtil.takePhoto(ChatActivity.this);
+
+            } else if (position == 1) {
+
+                PollUtil.showDialog(ChatActivity.this, new PollUtil.PopupListener() {
+                    @Override
+                    public void onDone(ArrayList<String> items) {
+                        // Liste işlemlerini burada yapabilirsiniz
+                        Toast.makeText(ChatActivity.this, items.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
             }
         });
