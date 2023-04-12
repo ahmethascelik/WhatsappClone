@@ -26,6 +26,7 @@ import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.ServiceLocator;
 import com.teb.whatsappclone.ui.util.CameraUtil;
 import com.teb.whatsappclone.ui.util.GalleryUtil;
+import com.teb.whatsappclone.ui.util.DocumentUtil;
 import com.teb.whatsappclone.ui.widgets.AttachmentItem;
 import com.teb.whatsappclone.ui.widgets.AttachmentView;
 
@@ -36,9 +37,11 @@ public class ChatActivity extends Activity {
 
     CameraUtil cameraUtil = new CameraUtil();
     GalleryUtil galleryUtil = new GalleryUtil();
+    DocumentUtil documentUtil = new DocumentUtil();
 
     public static final String EXTRA_NICKNAME = "EXTRA_NICKNAME";
     private int STORAGE_PERMISSION_CODE = 1;
+    private int PDF_PERMISSION_CODE = 1;
 
     public String nickname;
 
@@ -149,6 +152,8 @@ public class ChatActivity extends Activity {
         attachmentView.setItems(list);
         list.add(new AttachmentItem(R.drawable.ic_gallery, getString(R.string.gallery_title)));
         attachmentView.setItems(list);
+        list.add(new AttachmentItem(R.drawable.ic_document, getString(R.string.document_title)));
+        attachmentView.setItems(list);
 
         attachmentView.setItemClickListener(position -> {
             //0 ise camera
@@ -162,6 +167,16 @@ public class ChatActivity extends Activity {
                     requestStoragePermission();
                 }
             }
+            //2 ise document pdf
+            else if (position == 2) {
+                if (ContextCompat.checkSelfPermission(ChatActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    documentUtil.documentChooser(ChatActivity.this);
+                } else {
+                    requestPdfPermission();
+                }
+            }
+
         });
 
     }
@@ -194,6 +209,34 @@ public class ChatActivity extends Activity {
         }
     }
 
+    private void requestPdfPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("This permission is needed to upload PDF documents.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(ChatActivity.this,
+                                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PDF_PERMISSION_CODE);
+                            // code to open file chooser for PDF documents
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PDF_PERMISSION_CODE);
+        }
+    }
     public void toggleButtonsVisibility(boolean sendButtonGone){
 
         if(sendButtonGone){
@@ -237,6 +280,12 @@ public class ChatActivity extends Activity {
             }
         });
 
+        documentUtil.onActivityResult(ChatActivity.this, requestCode, resultCode, data, new DocumentUtil.OnDocumentGalleryListener() {
+            @Override
+            public void onDocumentGallerySuccess(String filePath) {
+                chatService.sendPdfMessage(nickname, filePath);
+            }
+        });
 
     }
 

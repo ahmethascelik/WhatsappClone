@@ -6,4 +6,5 @@
     <string name="welcome_x">Welcome %s</string>
     <string name="camera_title">Take Photo</string>
     <string name="gallery_title">Photo Library</string>
+    <string name="document_title">Document</string>
 </resources>

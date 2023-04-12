@@ -63,6 +63,26 @@ public class FakeChatService implements ChatService {
     }
 
     @Override
+    public void sendPdfMessage(String sender, String filePath) {
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.pdfUrl = filePath;
+        chatMessage.messageType = ChatMessageType.TYPE_PDF;
+        chatMessage.sender = sender;
+        fakeMessageList.add(chatMessage);
+
+        ChatMessage gelenMesaj = new ChatMessage();
+        gelenMesaj.pdfUrl = filePath;
+        gelenMesaj.messageType = ChatMessageType.TYPE_PDF;
+        gelenMesaj.sender = "yigit";
+        fakeMessageList.add(gelenMesaj);
+
+        if (messageListener != null) {
+            messageListener.onMessageListChanged(fakeMessageList);
+        }
+    }
+
+
+    @Override
     public void setMessageListener(MessageListener listener) {
         this.messageListener = listener;
     }

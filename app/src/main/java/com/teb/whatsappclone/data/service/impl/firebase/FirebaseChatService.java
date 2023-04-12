@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +21,7 @@ import com.teb.whatsappclone.data.model.ChatMessage;
 import com.teb.whatsappclone.data.model.ChatMessageType;
 import com.teb.whatsappclone.data.service.ChatService;
 import com.teb.whatsappclone.data.service.MessageListener;
+import com.google.firebase.storage.StorageMetadata;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,32 +39,15 @@ public class FirebaseChatService implements ChatService {
         writeNewTextMessage(sender, message);
     }
 
-    @Override
     public void sendImageMessage(String sender, String filePath) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
 
-
         Uri file = Uri.fromFile(new File(filePath));
         StorageReference remoteFileRef = storageRef.child("images/"+file.getLastPathSegment());
         UploadTask uploadTask = remoteFileRef.putFile(file);
-
-//// Register observers to listen for when the download is done or if it fails
-//        uploadTask.addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle unsuccessful uploads
-//            }
-//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-//                // ...
-//            }
-//        });
-
 
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -83,8 +68,6 @@ public class FirebaseChatService implements ChatService {
 
                     writeNewImageMessage(sender, downloadUri.toString());
 
-
-
                 } else {
                     // Handle failures
                     // ...
@@ -92,7 +75,39 @@ public class FirebaseChatService implements ChatService {
             }
         });
 
+        try {
+            Tasks.await(urlTask);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+
+    @Override
+    public void sendPdfMessage(String sender, String filePath) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+
+        Uri file = Uri.fromFile(new File(filePath));
+
+        // Create a reference to the PDF file with metadata
+        StorageReference remoteFileRef = storageRef.child("pdfs/"+file.getLastPathSegment());
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                .setContentType("application/pdf")
+                .build();
+
+        UploadTask uploadTask = remoteFileRef.putFile(file, metadata);
+
+        // Listen for upload success or failure
+        uploadTask.addOnSuccessListener(taskSnapshot -> {
+            // Upload successful, notify the user
+            Log.i("FirebaseChatService", "sendPdfMessage: PDF file uploaded successfully");
+        }).addOnFailureListener(e -> {
+            // Upload failed, handle error
+            Log.e("FirebaseChatService", "sendPdfMessage: Failed to upload PDF file", e);
+        });
     }
 
     public FirebaseChatService() {

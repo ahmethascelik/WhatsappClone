@@ -7,7 +7,7 @@ public class ChatMessage {
     public String dateTime;
 
     public String imageUrl;
-
+    public String pdfUrl;
 
     public int messageType;
 }
